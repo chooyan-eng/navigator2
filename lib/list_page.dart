@@ -1,18 +1,12 @@
-import 'package:architecture_research_sample/detail_page.dart';
 import 'package:flutter/material.dart';
 
 class ListPage extends StatelessWidget {
-  static const articles = [
-    'Flutter 101',
-    'Introduction to Flutter',
-    'Inside Flutter',
-    'Flutter Advanced',
-  ];
-
-  final ValueChanged<String> onSelectedArticle;
+  final List<String> articles;
+  final ValueChanged<int> onSelectedArticle;
 
   const ListPage({
     Key key,
+    this.articles,
     this.onSelectedArticle,
   }) : super(key: key);
 
@@ -26,7 +20,7 @@ class ListPage extends StatelessWidget {
         child: ListView.builder(
           itemCount: articles.length,
           itemBuilder: (context, index) => InkWell(
-            onTap: () => onSelectedArticle(articles[index]),
+            onTap: () => onSelectedArticle(index),
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: Text(articles[index]),

@@ -1,3 +1,5 @@
+import 'package:architecture_research_sample/article_route_information_parse.dart';
+import 'package:architecture_research_sample/article_router_delegate.dart';
 import 'package:architecture_research_sample/detail_page.dart';
 import 'package:architecture_research_sample/like_list_page.dart';
 import 'package:architecture_research_sample/list_page.dart';
@@ -17,59 +19,15 @@ class AppHome extends StatefulWidget {
 }
 
 class _AppHomeState extends State<AppHome> {
-  String _selectedArticle;
-  var _showLikeListPage = false;
+  final _routeInformationParser = ArticleRouteInformationParser();
+  final _routerDelegate = ArticleRouterDelegate();
 
   @override
   Widget build(BuildContext context) {
-    return Navigator(
-      pages: [
-        MaterialPage(
-          key: ValueKey('ListPage'),
-          child: ListPage(
-            onSelectedArticle: (value) {
-              setState(() {
-                _selectedArticle = value;
-              });
-            },
-          ),
-        ),
-        if (_selectedArticle != null)
-          MaterialPage(
-            key: ValueKey(_selectedArticle),
-            child: DetailPage(
-              title: _selectedArticle,
-              onLikeListTapped: () {
-                setState(() {
-                  _showLikeListPage = true;
-                });
-              },
-            ),
-          ),
-        if (_showLikeListPage)
-          MaterialPage(
-            key: ValueKey('LikeListPage'),
-            child: LikeListPage(),
-          )
-      ],
-      onPopPage: (route, result) {
-        if (!route.didPop(result)) {
-          return false;
-        }
-
-        if (_showLikeListPage) {
-          setState(() {
-            _showLikeListPage = false;
-          });
-          return true;
-        }
-
-        setState(() {
-          _selectedArticle = null;
-        });
-
-        return true;
-      },
+    return MaterialApp.router(
+      title: 'Article App',
+      routeInformationParser: _routeInformationParser,
+      routerDelegate: _routerDelegate,
     );
   }
 }
