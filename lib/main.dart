@@ -1,4 +1,3 @@
-import 'package:architecture_research_sample/article_route_information_parse.dart';
 import 'package:architecture_research_sample/article_router_delegate.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +15,7 @@ class AppHome extends StatefulWidget {
 }
 
 class _AppHomeState extends State<AppHome> {
-  final _routeInformationParser = ArticleRouteInformationParser();
+  final _routeInformationParser = VoidRouteInformationParser();
   final _routerDelegate = ArticleRouterDelegate();
 
   @override
@@ -26,4 +25,9 @@ class _AppHomeState extends State<AppHome> {
       routerDelegate: _routerDelegate,
     );
   }
+}
+
+class VoidRouteInformationParser extends RouteInformationParser<void> {
+  @override
+  Future<void> parseRouteInformation(RouteInformation routeInformation) async {}
 }
