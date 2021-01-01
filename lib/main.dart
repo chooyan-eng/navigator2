@@ -1,8 +1,5 @@
 import 'package:architecture_research_sample/article_route_information_parse.dart';
 import 'package:architecture_research_sample/article_router_delegate.dart';
-import 'package:architecture_research_sample/detail_page.dart';
-import 'package:architecture_research_sample/like_list_page.dart';
-import 'package:architecture_research_sample/list_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -25,7 +22,6 @@ class _AppHomeState extends State<AppHome> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Article App',
       routeInformationParser: _routeInformationParser,
       routerDelegate: _routerDelegate,
     );

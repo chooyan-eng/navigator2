@@ -15,17 +15,17 @@ class ArticleRouterDelegate extends RouterDelegate<ArticleRoutePath>
     'Flutter Advanced',
   ];
 
-  int articleId;
+  int _articleId;
   var _showLikeListPage = false;
 
   ArticleRouterDelegate() : navigatorKey = GlobalKey<NavigatorState>();
 
   ArticleRoutePath get currentConfiguration {
-    if (articleId != null) {
+    if (_articleId != null) {
       if (_showLikeListPage) {
-        return ArticleRoutePath.likeList(articleId);
+        return ArticleRoutePath.likeList(_articleId);
       } else {
-        return ArticleRoutePath.details(articleId);
+        return ArticleRoutePath.details(_articleId);
       }
     }
     return ArticleRoutePath.home();
@@ -34,22 +34,23 @@ class ArticleRouterDelegate extends RouterDelegate<ArticleRoutePath>
   @override
   Widget build(BuildContext context) {
     return Navigator(
+      key: navigatorKey,
       pages: [
         MaterialPage(
           key: ValueKey('ListPage'),
           child: ListPage(
             articles: articles,
             onSelectedArticle: (value) {
-              articleId = value;
+              _articleId = value;
               notifyListeners();
             },
           ),
         ),
-        if (articleId != null)
+        if (_articleId != null)
           MaterialPage(
-            key: ValueKey(articleId),
+            key: ValueKey(_articleId),
             child: DetailPage(
-              title: articles[articleId],
+              title: articles[_articleId],
               onLikeListTapped: () {
                 _showLikeListPage = true;
                 notifyListeners();
@@ -73,7 +74,7 @@ class ArticleRouterDelegate extends RouterDelegate<ArticleRoutePath>
           return true;
         }
 
-        articleId = null;
+        _articleId = null;
 
         notifyListeners();
         return true;
@@ -84,17 +85,23 @@ class ArticleRouterDelegate extends RouterDelegate<ArticleRoutePath>
   @override
   Future<void> setNewRoutePath(ArticleRoutePath configuration) async {
     if (configuration.isDetailsPage) {
-      articleId = configuration.articleId;
+      _articleId = configuration.articleId;
       _showLikeListPage = false;
       return;
     }
 
     if (configuration.isLikeListPage) {
-      articleId = configuration.articleId;
+      _articleId = configuration.articleId;
       return;
     }
 
-    articleId = null;
+    _articleId = null;
     _showLikeListPage = false;
+  }
+
+  @override
+  Future<bool> popRoute() {
+    // TODO: implement popRoute
+    return super.popRoute();
   }
 }
