@@ -1,13 +1,7 @@
 import 'package:architecture_research_sample/article_router_delegate.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(
-    MaterialApp(
-      home: AppHome(),
-    ),
-  );
-}
+void main() => runApp(AppHome());
 
 class AppHome extends StatefulWidget {
   @override
